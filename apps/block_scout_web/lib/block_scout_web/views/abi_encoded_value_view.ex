@@ -96,8 +96,16 @@ defmodule BlockScoutWeb.ABIEncodedValueView do
       |> Enum.with_index()
       |> Enum.map(fn {value, i} ->
         type = Enum.at(types, i)
-        [_, {:safe, val}] = do_value_html(type, value)
-        val
+        case type do
+          :bytes ->
+            do_value_html(type, value)
+          {:tuple, _} ->
+            do_value_html(type, value)
+          _ ->
+            res = do_value_html(type, value)
+            [_, {:safe, html_val}] = res
+            html_val
+        end
       end)
 
     "(" <> Enum.join(values_list, ",") <> ")"
