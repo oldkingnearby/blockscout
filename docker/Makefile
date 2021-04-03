@@ -318,7 +318,7 @@ else
 					-e POSTGRES_PASSWORD="" \
 					-e POSTGRES_USER="postgres" \
 					-e POSTGRES_HOST_AUTH_METHOD="trust" \
-					-p 5432:5432 \
+					-p 127.0.0.1:5432:5432 \
 					$(PG_CONTAINER_IMAGE)
 	@sleep 1
 	@$(MAKE) -f $(THIS_FILE) migrate_only
